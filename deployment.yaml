@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-backend
+  labels:
+    app: rag-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rag-backend
+  template:
+    metadata:
+      labels:
+        app: rag-backend
+    spec:
+      containers:
+      - name: rag-backend
+        image: ghcr.io/0018akhil/rag-backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: DATABASE_URL
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: SECRET_KEY
+        - name: ALGORITHM
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: ALGORITHM
+        - name: ACCESS_TOKEN_EXPIRE_MINUTES
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: ACCESS_TOKEN_EXPIRE_MINUTES
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: AWS_SECRET_ACCESS_KEY
+        - name: S3_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: S3_BUCKET_NAME
+        - name: PINECONE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: PINECONE_API_KEY
+        - name: UNSTRUCTURED_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: UNSTRUCTURED_API_KEY
+        - name: HUGGINGFACE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: HUGGINGFACE_API_KEY
+        - name: GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rag-secrets
+              key: GOOGLE_API_KEY
+      imagePullSecrets:
+      - name: ghcr-secret
