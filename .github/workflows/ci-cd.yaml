@@ -45,28 +45,6 @@ jobs:
         resource-group: myRAGcluster_group
         cluster-name: myRAGcluster
 
-    - name: Create secret for rag-backend
-      run: |
-        kubectl create secret generic rag-secrets \
-          --from-literal=DATABASE_URL=${{ secrets.DATABASE_URL }} \
-          --from-literal=SECRET_KEY=${{ secrets.SECRET_KEY }} \
-          --from-literal=ALGORITHM=${{ secrets.ALGORITHM }} \
-          --from-literal=ACCESS_TOKEN_EXPIRE_MINUTES=${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }} \
-          --from-literal=AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-          --from-literal=AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-          --from-literal=S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }} \
-          --from-literal=PINECONE_API_KEY=${{ secrets.PINECONE_API_KEY }} \
-          --from-literal=UNSTRUCTURED_API_KEY=${{ secrets.UNSTRUCTURED_API_KEY }} \
-          --from-literal=HUGGINGFACE_API_KEY=${{ secrets.HUGGINGFACE_API_KEY }} \
-          --from-literal=GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}
-    
-    - name: Create secret for ghcr.io    
-      run: |
-        kubectl create secret docker-registry ghcr-secret \
-        --docker-server=https://ghcr.io \
-        --docker-username==${{ secrets.DOCKER_USERNAME }} \
-        --docker-password=${{ secrets.DOCKER_PASSWORD }}
-
     - name: Deploy to AKS
       run: |
         kubectl apply -f deployment.yaml
