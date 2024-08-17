@@ -24,4 +24,4 @@ app.include_router(chat.router)
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the Secured Document Chat API"}
+    return {"message": "Welcome to chat with any document!"}
