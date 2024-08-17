@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: rag-backend
-        image: ghcr.io/0018akhil/rag-backend:${{ github.sha }}
+        image: ghcr.io/0018akhil/rag-backend:latest
+        imagePullPolicy: "Always"
         ports:
         - containerPort: 8000
         env:
