@@ -1,0 +1,33 @@
+# .github/workflows/ci-cd.yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: |
+        docker build \
+          --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
+          --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} \
+          --build-arg ALGORITHM=${{ secrets.ALGORITHM }} \
+          --build-arg ACCESS_TOKEN_EXPIRE_MINUTES=${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }} \
+          --build-arg AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+          --build-arg AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+          --build-arg S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }} \
+          --build-arg PINECONE_API_KEY=${{ secrets.PINECONE_API_KEY }} \
+          --build-arg UNSTRUCTURED_API_KEY=${{ secrets.UNSTRUCTURED_API_KEY }} \
+          --build-arg HUGGINGFACE_API_KEY=${{ secrets.HUGGINGFACE_API_KEY }} \
+          --build-arg GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} \
+          -t ghcr.io/0018akhil/rag-backend:latest .
+
+    - name: Push Docker image
+      run: |
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        docker push ghcr.io/0018akhil/rag-backend:latest
