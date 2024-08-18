@@ -1,8 +1,8 @@
-"""Initial migration
+"""Base revision
 
-Revision ID: 7df228fd5995
+Revision ID: 2422f176f295
 Revises: 
-Create Date: 2024-08-16 01:22:13.262246
+Create Date: 2024-08-18 12:09:47.669345
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '7df228fd5995'
+revision: str = '2422f176f295'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -34,7 +34,7 @@ def upgrade() -> None:
     op.create_table('documents',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(), nullable=True),
-    sa.Column('s3_object_key', sa.String(), nullable=True),
+    sa.Column('index_name', sa.String(), nullable=True),
     sa.Column('upload_date', sa.DateTime(), nullable=True),
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),

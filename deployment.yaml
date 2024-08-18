@@ -21,11 +21,11 @@ spec:
         ports:
         - containerPort: 8000
         env:
-        - name: DATABASE_URL
+        - name: PG_DATABASE_URL
           valueFrom:
             secretKeyRef:
               name: rag-secrets
-              key: DATABASE_URL
+              key: PG_DATABASE_URL
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
@@ -66,11 +66,6 @@ spec:
             secretKeyRef:
               name: rag-secrets
               key: UNSTRUCTURED_API_KEY
-        - name: HUGGINGFACE_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: rag-secrets
-              key: HUGGINGFACE_API_KEY
         - name: GOOGLE_API_KEY
           valueFrom:
             secretKeyRef:

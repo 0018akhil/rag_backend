@@ -1,3 +1,5 @@
 # ignore .evn file
 .env
 env
+
+**/__pycache__/
