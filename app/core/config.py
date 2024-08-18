@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     PG_DATABASE_URL: str
-    ALLOWED_ORIGINS: list[str] = ["http://localhost", "http://localhost:5173"]
+    ALLOWED_ORIGINS: list[str] = ["http://localhost", "http://localhost:5173", "http://139.59.76.60"]
     
     # AWS
     AWS_ACCESS_KEY_ID: str
